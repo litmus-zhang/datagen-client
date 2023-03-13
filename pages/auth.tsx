@@ -23,9 +23,12 @@ function Auth(props: Props) {
             <h1 className="text-2xl font-bold">Login</h1>
             <InputComponent type="email" placeholder="Email" />
             <InputComponent type="password" placeholder="Password" />
+            <Link href={"/"}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Login
             </button>
+            </Link>
+            
           </form>
         </div>
       </div>
