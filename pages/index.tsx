@@ -1,23 +1,32 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import React from "react";
+import React, { useState } from "react";
 import JSONPretty from "react-json-pretty";
 import Link from "next/link";
 
 export default function Home() {
   const [data, setData] = React.useState("");
+  const [input, setInput] = React.useState("")
+  const [clipboardText, setClipboardText] = React.useState("Copy")
+  const [loading, setLoading] = useState(false)
 
-  const generateData = () => {
-    fetch("https://fakerapi.it/api/v1/persons?_quantity=1")
-      .then((res) => res.json())
-      .then((data) => {
-        const finalData = data.data[0];
-        console.log(finalData);
-        setData(finalData);
-      });
+  const generateData = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: {}
+      })
+    } catch (err) { }
+
   };
   const copyToClipboard = () => {
     navigator.clipboard.writeText(JSON.stringify(data));
+    setClipboardText("Copied 🧾")
+
+    setInterval(() => {
+      setClipboardText("Copy")
+    }, 2000)
   };
   return (
     <div className="bg-gray-900 text-white w-full h-screen items-center">
@@ -33,8 +42,8 @@ export default function Home() {
       <header>
         <nav className="flex justify-between gap-2 items-center p-4">
 
-        <Link href="/" className="text-blue-400">Home</Link>
-        <Link href="/auth" className="text-blue-400">Login</Link>
+          <Link href="/" className="text-blue-400">Home</Link>
+          <Link href="/auth" className="text-blue-400">Login</Link>
         </nav>
 
       </header>
@@ -48,6 +57,8 @@ export default function Home() {
         <div className="flex items-center justify-center  my-3">
           <input
             type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
             className="p-2 outline-none focus:text-black"
             placeholder="Type a prompt e.g generate a full user details for signup"
           />
@@ -55,7 +66,7 @@ export default function Home() {
             onClick={generateData}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
-            Generate
+            {loading ? "Generating..." : "Generate"}
           </button>
         </div>
         <p className="text-gray-400 font-bold">Generated Data</p>
@@ -73,7 +84,7 @@ export default function Home() {
               onClick={copyToClipboard}
               className="absolute top-2 right-2 bg-blue-400 outline-none hover:bg-blue-600 p-2 text-xs rounded-md"
             >
-              Copy
+              {clipboardText}
             </button>
           </div>
         </div>
