@@ -15,9 +15,18 @@ export default function Home() {
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
-        headers: {}
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ input })
       })
-    } catch (err) { }
+      const { output } = await response.json()
+      setData(output)
+      setLoading(false)
+
+    } catch (err) {
+      console.log("error", err)
+    }
 
   };
   const copyToClipboard = () => {
