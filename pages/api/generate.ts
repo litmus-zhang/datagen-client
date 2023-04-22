@@ -1,7 +1,7 @@
 require('dotenv/config');
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Configuration , OpenAIApi} from 'openai';
+import { Configuration, OpenAIApi } from 'openai';
 
 
 
@@ -20,12 +20,13 @@ with the following title
 
 Title: `
 
-export default async function generateAction(
+const generateAction = async (
   req: NextApiRequest,
   res: NextApiResponse
-) {
+) => {
 
   try {
+    console.log('API request: ', req.body.input)
     const baseCompletion = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: `${basePromptPrefix}${req.body.input}`,
@@ -41,3 +42,6 @@ export default async function generateAction(
 
   }
 }
+
+
+export default generateAction

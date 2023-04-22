@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import React, { useState } from "react";
 import JSONPretty from "react-json-pretty";
 import Link from "next/link";
+import axios from "axios";
 
 export default function Home() {
   const [data, setData] = React.useState("");
@@ -13,20 +14,15 @@ export default function Home() {
   const generateData = async () => {
     setLoading(true)
     try {
-      const response = await fetch("/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ input })
-      })
-      const { output } = await response.json()
-      console.log(output);
+      const response = await axios.post('/api/generate', input)
+      const { output } = await await response.data
+      console.log(input, output);
       setData(output)
       setLoading(false)
 
     } catch (err) {
       console.log("error", err)
+      alert("There was an error generating your response")
     }
 
   };
