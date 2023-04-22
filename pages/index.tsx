@@ -21,6 +21,7 @@ export default function Home() {
         body: JSON.stringify({ input })
       })
       const { output } = await response.json()
+      console.log(output);
       setData(output)
       setLoading(false)
 
