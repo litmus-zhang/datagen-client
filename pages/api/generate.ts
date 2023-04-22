@@ -1,13 +1,16 @@
+require('dotenv/config');
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Configuration, OpenAIApi } from 'openai'
+import { Configuration , OpenAIApi} from 'openai';
+
+
 
 type Data = {
   name: string
 }
 
 const configuration = new Configuration({
-  apiKey: "API KEY"
+  apiKey: process.env.API_KEY
 })
 
 const openai = new OpenAIApi(configuration);
