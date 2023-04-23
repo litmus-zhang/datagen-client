@@ -67,13 +67,13 @@ export default function Home() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="p-2 outline-none focus:text-black"
+            className="p-2 outline-none text-white bg-gray-700"
             placeholder="Type a prompt e.g generate a full user details for signup"
           />
           <button
             onClick={generateData}
             disabled={loading}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
           >
             {loading ? "Generating..." : "Generate"}
           </button>
