@@ -15,8 +15,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const basePromptPrefix = `Generate data in json format that can be useful for cybersecurity  professionals,
-with the following title 
+const basePromptPrefix = `Generate data in json format, with the following title 
 
 Title: `
 
