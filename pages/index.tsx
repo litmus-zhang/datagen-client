@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import React, { useState } from "react";
 import JSONPretty from "react-json-pretty";
 import Link from "next/link";
@@ -21,8 +20,11 @@ export default function Home() {
       setLoading(false)
 
     } catch (err) {
+      setLoading(false)
+
       console.log("error", err)
-      alert("There was an error generating your response")
+      //alert("There was an error generating your response")
+      alert(err.message)
     }
 
   };
