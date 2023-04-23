@@ -23,8 +23,8 @@ export default function Home() {
       setLoading(false)
 
       console.log("error", err)
-      //alert("There was an error generating your response")
-      alert(err.message)
+      alert("There was an error generating your response")
+      // alert(err)
     }
 
   };
