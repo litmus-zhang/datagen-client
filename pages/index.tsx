@@ -13,11 +13,12 @@ export default function Home() {
   const generateData = async () => {
     setLoading(true)
     try {
-      const response = await axios.post('/api/generate', input)
-      const { output } = await await response.data
+      const response = await axios.post('/api/generate', { input })
+      const { output } = await response.data
       console.log(input, output);
       setData(output)
       setLoading(false)
+      setInput("")
 
     } catch (err) {
       setLoading(false)
@@ -63,6 +64,7 @@ export default function Home() {
         </p>
 
         <div className="flex items-center justify-center  my-3">
+
           <input
             type="text"
             value={input}
