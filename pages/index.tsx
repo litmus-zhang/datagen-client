@@ -13,12 +13,18 @@ export default function Home() {
   const generateData = async () => {
     setLoading(true)
     try {
-      const response = await axios.post('/api/generate', { input })
-      const { output } = await response.data
-      console.log(input, output);
-      setData(output)
-      setLoading(false)
-      setInput("")
+      if (input.length === 0) {
+        alert("You need to input a text")
+        setLoading(false)
+      } else {
+        const response = await axios.post('/api/generate', { input })
+        const { outputs } = await response.data
+        console.log(input, outputs);
+        setData(outputs)
+        setLoading(false)
+        setInput("")
+      }
+
 
     } catch (err) {
       setLoading(false)
@@ -63,19 +69,19 @@ export default function Home() {
           any purpose
         </p>
 
-        <div className="flex items-center justify-center  my-3">
+        <div className="flex flex-col items-center justify-center gap-2 my-3">
 
-          <input
-            type="text"
+          <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="p-2 outline-none text-white bg-gray-700"
+            className="p-2 outline-none text-white bg-gray-700 rounded-md w-1/2"
             placeholder="Type a prompt e.g generate a full user details for signup"
+            rows={5}
           />
           <button
             onClick={generateData}
             disabled={loading}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
+            className={`bg-blue-500 text-white font-bold py-2 px-4 rounded cursor-auto ${loading ? "animate-pulse" : ""}`}
           >
             {loading ? "Generating..." : "Generate"}
           </button>
