@@ -1,50 +1,42 @@
 import Head from "next/head";
-import React, { useState } from "react";
+import React, * as react from "react";
 import JSONPretty from "react-json-pretty";
-import Link from "next/link";
 import axios from "axios";
 
 export default function Home() {
   const [data, setData] = React.useState("");
-  const [input, setInput] = React.useState("")
-  const [clipboardText, setClipboardText] = React.useState("Copy")
-  const [loading, setLoading] = useState(false)
+  const [model, setModel] = React.useState("");
+  const [quantity, setQuantity] = React.useState(1);
+  const [clipboardText, setClipboardText] = React.useState("Copy");
+  const [loading, setLoading] = react.useState(false);
 
-  const generateData = async () => {
-    setLoading(true)
+  const generateData = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
     try {
-      if (input.length === 0) {
-        alert("You need to input a text")
-        setLoading(false)
-      } else {
-        const response = await axios.post('/api/generate', { input })
-        const { outputs } = await response.data
-        console.log(input, outputs);
-        setData(outputs)
-        setLoading(false)
-        setInput("")
-      }
-
-
+      const response = await axios.post("http://localhost:8000/models", {
+        model: model,
+        quantity: quantity,
+      });
+      console.log(response.data.data);
+      setData(response.data.data);
+      setLoading(false);
     } catch (err) {
-      setLoading(false)
+      setLoading(false);
 
-      console.log("error", err)
-      alert("There was an error generating your response")
-      // alert(err)
+      console.log("error", err);
     }
-
   };
   const copyToClipboard = () => {
     navigator.clipboard.writeText(JSON.stringify(data));
-    setClipboardText("Copied 🧾")
+    setClipboardText("Copied 🧾");
 
     setInterval(() => {
-      setClipboardText("Copy")
-    }, 2000)
+      setClipboardText("Copy");
+    }, 2000);
   };
   return (
-    <div className="bg-gray-900 text-white w-full h-screen items-center">
+    <div className="bg-gray-900 text-white w-full min-h-screen items-center">
       <Head>
         <title>Fictional Data generator</title>
         <meta
@@ -54,38 +46,60 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header>
-        <nav className="flex justify-between gap-2 items-center p-4">
 
-          <Link href="/" className="text-blue-400">Home</Link>
-          <Link href="/auth" className="text-blue-400">Login</Link>
-        </nav>
-
-      </header>
-      <main className="flex flex-col font-sans text-center py-6   ">
+      <main className="flex flex-col font-sans text-center py-10  ">
         <h1 className="text-3xl font-bold"> Data Generator</h1>
         <p className="text-gray-400">
           The revolutionary software used for generating high-quality data for
           any purpose
         </p>
 
-        <div className="flex flex-col items-center justify-center gap-2 my-3">
-
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="p-2 outline-none text-white bg-gray-700 rounded-md w-1/2"
-            placeholder="Type a prompt e.g generate a full user details for signup"
-            rows={5}
-          />
+        <form
+          onSubmit={generateData}
+          className="flex flex-col w-64 mx-auto border border-gray-600 p-4 rounded gap-2 my-4"
+        >
+          <div className="flex flex-col items-start gap-1 w-full">
+            <label className="text-gray-400" htmlFor="">
+              Model
+            </label>
+            <select
+              className="px-2 py-1 rounded text-black outline-none w-full"
+              onChange={(e) => setModel(e.target.value)}
+              id=""
+              name={model}
+              defaultValue={"user"}
+            >
+              <option  value="user">User</option>
+              <option value="credit_card">Credit Card Details</option>
+            </select>
+          </div>
+          <div className="flex flex-col items-start gap-1 w-full">
+            <label className="text-gray-400" htmlFor="">
+              Number of records
+            </label>
+            <input
+              className="px-2 py-1 rounded text-black outline-none w-full"
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(parseInt(e.target.value))}
+              min={0}
+              max={100}
+              name="quantity"
+            />
+            <small>
+              <span className="text-gray-400">Max: 100</span>
+            </small>
+          </div>
           <button
-            onClick={generateData}
+            type="submit"
             disabled={loading}
-            className={`bg-blue-500 text-white font-bold py-2 px-4 rounded cursor-auto ${loading ? "animate-pulse" : ""}`}
+            className={`bg-blue-500 text-white font-bold py-2 px-4 rounded cursor-auto ${
+              loading ? "animate-pulse" : ""
+            }`}
           >
             {loading ? "Generating..." : "Generate"}
           </button>
-        </div>
+        </form>
         <p className="text-gray-400 font-bold">Generated Data</p>
 
         <div className="flex flex-col relative m-4 w-2/3 justify-center  self-center">
