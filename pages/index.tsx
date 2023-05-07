@@ -5,7 +5,7 @@ import axios from "axios";
 
 export default function Home() {
   const [data, setData] = React.useState("");
-  const [model, setModel] = React.useState("");
+  const [model, setModel] = React.useState("user");
   const [quantity, setQuantity] = React.useState(1);
   const [clipboardText, setClipboardText] = React.useState("Copy");
   const [loading, setLoading] = react.useState(false);
@@ -13,8 +13,9 @@ export default function Home() {
   const generateData = async (e: any) => {
     e.preventDefault();
     setLoading(true);
+    console.log(process.env.API_URL)
     try {
-      const response = await axios.post("http://localhost:8000/models", {
+      const response = await axios.post("https://datagen-server-production.up.railway.app/models", {
         model: model,
         quantity: quantity,
       });
@@ -67,7 +68,7 @@ export default function Home() {
               onChange={(e) => setModel(e.target.value)}
               id=""
               name={model}
-              defaultValue={"user"}
+              defaultValue ="user"
             >
               <option  value="user">User</option>
               <option value="credit_card">Credit Card Details</option>

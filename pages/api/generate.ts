@@ -1,4 +1,4 @@
-require('dotenv/config');
+require('dotenv').config();
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -11,9 +11,9 @@ const generateAction = async (
 
   try {
     console.log('API request: ', req.body.input)
-    const response =  await axios.post(`${process.env.API_URL}/users`, req.body.input)
+    const response =  await axios.post("http://localhost:8000/models", req.body.input)
     console.log('API response: ', response.data)
-
+    return res.status(200).json(response.data)
 
   } catch (err) {
     console.log(err);
