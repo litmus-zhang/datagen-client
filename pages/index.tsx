@@ -15,7 +15,7 @@ export default function Home() {
     setLoading(true);
     console.log(process.env.API_URL)
     try {
-      const response = await axios.post("https://datagen-server-production.up.railway.app/models", {
+      const response = await axios.post("https://datagen-zda7.onrender.com/models", {
         model: model,
         quantity: quantity,
       });
