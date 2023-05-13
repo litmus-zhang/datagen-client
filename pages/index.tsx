@@ -72,6 +72,10 @@ export default function Home() {
             >
               <option  value="user">User</option>
               <option value="credit_card">Credit Card Details</option>
+              <option value="patient_info">Patient Information</option>
+              <option value="stock">Company Stock</option>
+              <option value="food">Full Dish</option>
+              <option value="school">School</option>
             </select>
           </div>
           <div className="flex flex-col items-start gap-1 w-full">
