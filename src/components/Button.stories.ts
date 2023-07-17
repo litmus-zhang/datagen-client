@@ -1,47 +1,47 @@
 import Button from "./Button";
 
 export default {
-    title: "Button",
+    title: "Components/Button",
     component: Button,
     tags: ["autodocs", "button"],
 };
 
-export const Primary = {
+export const Solid = {
     args: {
-        variant: "primary",
+        variant: "solid",
         text: "Primary Button",
     },
 };
-export const PrimaryDisabled = {
+export const SolidDisabled = {
     args: {
-        ...Primary.args,
+        ...Solid.args,
         disabled: true
     }
 }
 
-export const PrimaryLoading = {
+export const SolidLoading = {
     args: {
-        ...Primary.args,
+        ...Solid.args,
         loading: true
     }
 }
-export const Secondary = {
+export const Ghost = {
     args: {
         text: "Secondary Button",
-        variant: "secondary",
+        variant: "ghost",
     },
 };
 
-export const SecondaryDisabled = {
+export const GhostDisabled = {
     args: {
-        ...Secondary.args,
+        ...Ghost.args,
         disabled: true
     },
 };
 
-export const SecondaryLoading = {
+export const GhostLoading = {
     args: {
-        ...Secondary.args,
+        ...Ghost.args,
         loading: true
     }
 }

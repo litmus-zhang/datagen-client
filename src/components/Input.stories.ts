@@ -1,7 +1,7 @@
 import Input from "./Input"
 
 export default {
-    title: "Input",
+    title: "Components/Input",
     component: Input,
     tags: ["autodocs", "input"],
 };
@@ -11,5 +11,12 @@ export const Default = {
         label: "Fullname",
         type: "text",
         placeholder: "James Jones"
+    }
+}
+
+export const Error = {
+    args: {
+        ...Default.args,
+        errorMsg: "Please enter a valid email"
     }
 }
