@@ -23,7 +23,7 @@ export default function Input(props: InputProps) {
                 disabled={props.disabled}
                 type={props.type} />
             {props.errorMsg &&
-                <span className='text-xs p-2 w-full bg-red-500 text-white -my-2'>{props.errorMsg}</span>}
+                <span className='text-xs p-2 w-full bg-red-500 text-white -my-1'>{props.errorMsg}</span>}
         </div>
     )
 }
